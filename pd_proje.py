@@ -5,14 +5,14 @@ class Lexer:
     def __init__(self):
         self.keywords = {"if", "else", "while", "for", "return","switch","case","do","int","float","string","double","long","short"}
         self.operators = {"+", "-", "*", "/", "=", "<", ">", "!", "&", "|"}
-
+        self.preprocessor = {"include", "define"}  
     def tokenize(self, text):
         tokens = []
         i = 0
         n = len(text)
 
         while i < n:
-            # Yorumlar (//, # veya /* */)
+            # Yorumlar (// veya /* */)
             if i + 1 < n and text[i] == "/" and text[i + 1] == "/":
                 end = text.find("\n", i)
                 if end == -1:
@@ -21,17 +21,35 @@ class Lexer:
                 i = end
             
             elif i + 1 < n and text[i] == "/" and text[i + 1] == "*":
+                start = i
                 end = text.find("*/", i)
                 if end == -1:
                     end = n
-                tokens.append(("COMMENT", i, end ))
-                i = end 
-            elif i+1 < n and text[i]=="#":
-                end= text.find("\n",i)
-                if end==-1:
-                    end=n
-                tokens.append(("COMMENT",i,end))
-                i=end
+                else:
+                    end += 2 
+                tokens.append(("COMMENT", start, end))
+                i = end
+             # Preprocessor direktifleri (#include, #define)
+            elif text[i] == "#":
+                start = i
+                i += 1
+               
+                while i < n and text[i].isspace():
+                    i += 1
+                
+                directive_start = i
+                while i < n and text[i].isalpha():
+                    i += 1
+                directive = text[directive_start:i]
+                
+                if directive in self.preprocessor:
+                   
+                    end = text.find("\n", i)
+                    if end == -1:
+                        end = n
+                    tokens.append(("PREPROCESSOR", start, end))
+                    i = end
+           
             # Sayılar
             elif text[i].isdigit():
                 start = i
@@ -91,7 +109,8 @@ class SyntaxHighlighterApp:
             "NUMBER": "red",
             "STRING": "red",
             "OPERATOR": "orange",
-            "COMMENT": "gray"
+            "COMMENT": "gray",
+            "PREPROCESSOR": "purple"
         }
 
         # Tag'leri başta tanımla
