@@ -6,7 +6,7 @@ Proje gerçek zamanlı bir söz dizimi vurgulayıcı yapmayı amaçlamaktadır.K
 
 # Lexical Analysis
 
-State diagram & program implementation yaklaşımı
+State diagram & Program implementation yaklaşımı
 
 # Parsel Tasarımı
 
@@ -24,6 +24,7 @@ Yorum Satırları: Gri
 # Kullanılan Teknolojiler
 
 Python 
+
 Tkinter
 
 # Projemle ilgili Youtube videom:
