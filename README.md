@@ -1,5 +1,5 @@
 # Syntax Highlighter
-# a
+
 # Proje Özeti
 
 Proje gerçek zamanlı bir söz dizimi vurgulayıcı yapmayı amaçlamaktadır.Kodlama Python diliyle yapılmıştır.C dilinin sözdizimi renklendirilmek istenmiştir.
